@@ -63,8 +63,8 @@ class VertxPlugin implements Plugin<Project> {
     }
 
     project.task([type: Copy, dependsOn: 'classes'], 'prepareVertxModule', {
-      group = ''
-      description = ''
+      group = 'vert.x'
+      description = 'Prepares the module to be distributed'
       into "build/mod/${project.modulename}-v${project.version}"
       from project.sourceSets.main.output.classesDir
       from project.sourceSets.main.output.resourcesDir
@@ -74,8 +74,8 @@ class VertxPlugin implements Plugin<Project> {
     })
 
     project.task([type: Sync, dependsOn: ['prepareVertxModule']], 'prepareVertxInteg', {
-      group = ''
-      description = ''
+      group = 'vert.x'
+      description = 'Prepares the integration tests for this module'
       from project.extensions.vertxInteg.modDir
       into project.extensions.vertxInteg.modsDir
     })
