@@ -69,7 +69,7 @@ class VertxPlugin implements Plugin<Project> {
       from project.sourceSets.main.output.classesDir
       from project.sourceSets.main.output.resourcesDir
       into( 'lib' ) { 
-        from (project.configurations.runtime - (project.configurations.provided + project.configurations.groovy))
+        from (project.configurations.runtime - project.configurations.provided)
       }
     })
 
@@ -79,6 +79,19 @@ class VertxPlugin implements Plugin<Project> {
       from project.extensions.vertxInteg.modDir
       into project.extensions.vertxInteg.modsDir
     })
+
+    /* TODO
+    project.task([type: Copy, dependsOn: 'prepareVertxModule'], 'installVertxModule', {
+      group = 'vert.x'
+      description = 'Prepares the module to be distributed'
+      destinationDir = project.file("${project.extensions.vertx.modDir}/${project.modulename}-v${project.version}")
+
+      from project.sourceSets.main.output.classesDir
+      from project.sourceSets.main.output.resourcesDir
+      into( 'lib' ) { 
+        from (project.configurations.runtime - project.configurations.provided)
+      }
+    })*/
 
     def vertxPackageModule = project.task([type: Zip, dependsOn: ['prepareVertxModule']], 'vertxPackageModule', {
       group = 'vert.x'

@@ -24,12 +24,13 @@ class VertxInstanceExtension {
 
   String host = 'localhost'
   int port = -1
-  String modDir = 'build/mod'
+  String modDir
   String tempMods = 'build/tmp/mods-test'
   String loggingProperties
   
   def VertxInstanceExtension(Project project) {
     this.project = project
+	modDir = project.vertxModuleDir ?: 'build/mod'
   }
 
 }
