@@ -80,18 +80,18 @@ class VertxPlugin implements Plugin<Project> {
       into project.extensions.vertxInteg.modsDir
     })
 
-    /* TODO
-    project.task([type: Copy, dependsOn: 'prepareVertxModule'], 'installVertxModule', {
+    project.task([type: Copy, dependsOn: ['prepareVertxModule']], 'installVertxModule', {
       group = 'vert.x'
-      description = 'Prepares the module to be distributed'
+      description = 'Installs the module in the mods directory'
       destinationDir = project.file("${project.extensions.vertx.modDir}/${project.modulename}-v${project.version}")
 
+      from project.file("./src/main/conf")
       from project.sourceSets.main.output.classesDir
       from project.sourceSets.main.output.resourcesDir
       into( 'lib' ) { 
         from (project.configurations.runtime - project.configurations.provided)
       }
-    })*/
+    })
 
     def vertxPackageModule = project.task([type: Zip, dependsOn: ['prepareVertxModule']], 'vertxPackageModule', {
       group = 'vert.x'
